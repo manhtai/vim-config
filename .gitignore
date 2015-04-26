@@ -1,0 +1,4 @@
+dirs/*
+.netrwhist
+bundle/*
+*.sess
