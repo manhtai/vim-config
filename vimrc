@@ -69,6 +69,9 @@ Bundle 'mbbill/undotree'
 Bundle 'fisadev/FixedTaskList.vim'
 " Ack
 Bundle 'mileszs/ack.vim'
+" Snippet
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 " }}}
 " Plugins from vim-scripts repos {{{
 
@@ -432,7 +435,6 @@ au VimResized * :wincmd =
 
 " }}}
 " PLUGINS SETTINGS AND MAPPINGS ========================================== {{{
-
 " Tasklist {{{
 map <F2> :TaskList<CR>
 " }}}
@@ -449,7 +451,7 @@ let g:tagbar_autofocus = 1
 nnoremap <F5> :UndotreeToggle<cr>
 " }}}
 " Yankring {{{
-nnoremap <silent> <leader><tab> :YRShow<CR>
+nnoremap <silent> <F6> :YRShow<CR>
 
 function! YRRunAfterMaps()
     " Make Y yank to end of line.
@@ -462,6 +464,13 @@ function! YRRunAfterMaps()
     " Don't clobber the yank register when pasting over text in visual mode.
     vnoremap p :<c-u>YRPaste 'p', 'v'<cr>gv:YRYankRange 'v'<cr>
 endfunction
+
+" }}}
+" Snippet {{{
+let g:UltiSnipsExpandTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+
 " }}}
 " CtrlP {{{
 let g:ctrlp_dont_split = 'NERD_tree_2'
@@ -551,7 +560,7 @@ let g:pymode_breakpoint = 0
 let g:pymode_trim_whitespaces = 0
 let g:pymode_virtualenv = 0
 let g:pymode_rope = 0
-let g:pymode_folding = 1
+let g:pymode_folding = 0
 
 " }}}
 " TabMan {{{
