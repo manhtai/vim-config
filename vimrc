@@ -276,10 +276,13 @@ inoremap <c-l> <c-x><c-l>
 
 " Edit shorcuts
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>es :source $MYVIMRC<cr>
 nnoremap <leader>ef :vsplit ~/.config/fish/functions/aliases.fish<cr>
 nnoremap <leader>eg :vsplit ~/.gitconfig<cr>
 nnoremap <leader>em :vsplit ~/.mutt/muttrc<cr>
+
+" Source
+vnoremap <leader>S y:@"<CR>
+nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 
 " Sort lines
 nnoremap <leader>s vip:!sort<cr>
@@ -405,7 +408,7 @@ vnoremap <Space> zf
 
 " Make zO recursively open whatever fold we're in, even if it's partially open.
 nnoremap zO zczO
-nnoremap <c-z> mzzMzvzz15<c-e>`z<Plug>Pulse<cr>
+nnoremap <c-z> mzzMzvzz15<c-e>`z<cr>
 
 function! MyFoldText() " {{{
     let line = getline(v:foldstart)
@@ -431,10 +434,23 @@ au FocusLost * :silent! wall
 
 " Resize splits when the window is resized
 au VimResized * :wincmd =
+
+" Visual mode
+function! s:VSetSearch()
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
+endfunction
+
+vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
+vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
+
 " }}}
 
 " }}}
 " PLUGINS SETTINGS AND MAPPINGS ========================================== {{{
+
 " Tasklist {{{
 map <F2> :TaskList<CR>
 " }}}
@@ -451,7 +467,7 @@ let g:tagbar_autofocus = 1
 nnoremap <F5> :UndotreeToggle<cr>
 " }}}
 " Yankring {{{
-nnoremap <silent> <F6> :YRShow<CR>
+nnoremap <silent> <leader><tab> :YRShow<CR>
 
 function! YRRunAfterMaps()
     " Make Y yank to end of line.
@@ -467,9 +483,9 @@ endfunction
 
 " }}}
 " Snippet {{{
-let g:UltiSnipsExpandTrigger="<C-k>"
+let g:UltiSnipsExpandTrigger="<C-b>"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
-let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+let g:UltiSnipsJumpBackwardTrigger="<C-j>"
 
 " }}}
 " CtrlP {{{
@@ -636,13 +652,13 @@ let g:tslime_vars_mapping = '<localleader>T'
 let delimitMate_excluded_ft = "clojure,lisp"
 nmap <Leader>x :DelimitMateOff<cr>
 " }}}
-" Rainbow
+" Rainbow {{{
 augroup rainbow
   autocmd!
   autocmd FileType python,lisp,clojure,scheme RainbowParentheses
 augroup END
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-
+" }}}
 " Ack {{{
 nnoremap <leader>a :Ack!<space>
 let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
@@ -861,4 +877,5 @@ augroup ft_xml
 augroup END
 
 " }}}
+
 " }}}
