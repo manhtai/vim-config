@@ -255,6 +255,7 @@ nnoremap N Nzzzv
 " Edit tricks {{{
 " Copy to and paste from clipboard
 vnoremap <C-c> "+y
+vnoremap <C-x> "+x
 nnoremap <C-v> "+p
 
 " Delete from there
@@ -300,7 +301,7 @@ augroup END
 
 " Use 256 colors
 let &t_Co = 256
-colorscheme spyder
+set background=light
 
 " Error match
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -565,7 +566,7 @@ let g:pymode_run = 1
 let g:pymode_run_bind = '<leader>R'
 
 let g:pymode_syntax = 1
-let g:pymode_syntax_doctests = 1
+let g:pymode_syntax_doctests = 0
 let g:pymode_syntax_docstrings = 1
 
 let g:pymode_syntax_print_as_function = 1
@@ -816,9 +817,6 @@ augroup ft_python
     au FileType python setlocal define=^\s*\\(def\\\\|class\\)
     au FileType python RainbowParentheses
     au FileType man nnoremap <buffer> <cr> :q<cr>
-    hi link pythonDocString Type
-    hi link pythonString Comment
-    hi link pythonNumber Special
 augroup END
 
 " }}}
